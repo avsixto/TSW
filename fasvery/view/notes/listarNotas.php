@@ -8,10 +8,10 @@ $errors = $view->getVariable("errors");
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-	<link rel="shortcut icon"  href="../img/iconoLogo.png">
-	<link rel="stylesheet" href="../../css/style.css">
-	<link rel="stylesheet" href="../img/Iconos/Iconos.css">
-	<script src="../../css/menuWeb.js" type="text/javascript"></script>
+	<link rel="shortcut icon"  href="./view/Imágenes/iconoLogo.png">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./view/Imágenes/Iconos/Iconos.css">
+	<script src="./css/menuWeb.js" type="text/javascript"></script>
 	<title>FastVery</title>
 </head>
 <body>
@@ -19,13 +19,13 @@ $errors = $view->getVariable("errors");
 		<section>
 				<head>
 					<meta charset="utf-8">
-					<link rel="stylesheet" href="../../css/formularios.css">
+					<link rel="stylesheet" href="./css/formularios.css">
 					<title>registroUsuario</title>
 				</head>
 				<body>
 				<div class="container">
 				<div class="tituloListar"><h1>Notas Publicadas</h1></div>
-				<?php foreach($listaNotas as $nota): ?>
+				<?php foreach($listaNotas as $nota){ ?>
 					<form class="formListarNota" action="index.php?controller=Notas&amp;action=nueva" method="POST">
 						<fieldset>
 								<legend align="center"><h1>Título Nota</h1></legend>
@@ -43,7 +43,7 @@ $errors = $view->getVariable("errors");
 								</div>
 						</fieldset>
 					</form>
-				<?php endforeach;?>
+				<?php } ?>
 				<div><h1>Notas Compartidas Conmigo</h1></div>
 				</div>
 				</body>

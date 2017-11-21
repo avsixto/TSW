@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-	<link rel="shortcut icon"  href="../img/iconoLogo.png">
-	<link rel="stylesheet" href="../../css/style.css">
-	<link rel="stylesheet" href="../img/Iconos/Iconos.css">
-	<script src="../../css/menuWeb.js" type="text/javascript"></script>
+	<link rel="shortcut icon"  href="./view/Imágenes/iconoLogo.png">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./view/Imágenes/Iconos/Iconos.css">
+	<script src="./css/menuWeb.js" type="text/javascript"></script>
 	<title>FastVery</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
 	<section>
 			<head>
 				<meta charset="utf-8">
-				<link rel="stylesheet" href="../../css/formularios.css">
+				<link rel="stylesheet" href="./css/formularios.css">
 				<title>registroUsuario</title>
 			</head>
 			<body>
