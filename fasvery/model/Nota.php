@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__."/../core/ValidationException.php");
 
+
 class Nota {
 
 	private $idNota;
@@ -9,13 +10,15 @@ class Nota {
 	private $fecha;
 	//La clave foránea
 	private $idUsuario;
+	private $nombreAutor;
 
-	public function __construct($idNota=NULL, $titulo=NULL, $contenido=NULL, $fecha=NULL, $idUsuario=NULL) {
+	public function __construct($idNota=NULL, $titulo=NULL, $contenido=NULL, $fecha=NULL, $idUsuario=NULL, $nombreAutor=NULL) {
 		$this->idNota = $idNota;
 		$this->titulo = $titulo;
 		$this->contenido = $contenido;
 		$this->fecha = $fecha;
 		$this->idUsuario=$idUsuario;
+		$this->nombreAutor=$nombreAutor;
 	}
 
 	public function getIdNota() {
@@ -37,6 +40,10 @@ class Nota {
 	public function getIdUsuario(){
 		return $this->idUsuario;
 	}
+
+	public function getAutor() {
+		return $this->nombreAutor;
+	}
 	
 	public function setTitulo($titulo) {
 		$this->titulo = $titulo;
@@ -52,6 +59,10 @@ class Nota {
 	
 	public function setIdUsuario(){
 		$this->idUsuario = $idUsuario;
+	}
+
+	public function setAutor($nombreAutor){
+		$this->nombreAutor = $nombreAutor;
 	}
 	
 		public function checkIsValidForUpdate() {

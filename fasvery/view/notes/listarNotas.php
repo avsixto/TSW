@@ -31,7 +31,7 @@ $errors = $view->getVariable("errors");
 								<legend align="center"><h1>Título Nota</h1></legend>
 								<div class="form">
 									<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
-									<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$nota->getIdUsuario()?></label>
+									<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$nota->getAutor()?></label>
 									<label class="labelFecha"><span class="icon-sun-o"></span>Fecha</label>
 									<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 								</div>
