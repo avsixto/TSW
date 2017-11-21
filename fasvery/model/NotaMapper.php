@@ -64,4 +64,21 @@ class NotaMapper {
 		}
 		return $listaNotas;
 	}
+
+	public function listNote2($alias){
+		$stmt = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
+		$stmt->execute(array($alias));
+		$fk_idUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$id;
+		foreach ($fk_idUsuario as $id){
+			$stmt = $this->db->prepare("SELECT nota.*,usuario.nombre FROM nota,usuario WHERE fk_idUsuario=?");
+			$stmt->execute(array($id["idUsuario"]));
+			$notas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+		$listaNotas=array();
+		foreach($notas as $nota){
+			array_push($listaNotas, new Nota($nota["idNota"], $nota["titulo"], $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"]));
+		}
+		return $listaNotas;
+	}
 }

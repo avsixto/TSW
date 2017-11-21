@@ -36,7 +36,7 @@ class NotasController extends BaseController {
 			$note = new Nota();
 			$note->setTitulo($_POST["titulo"]);
 			$note->setContenido($_POST["contenido"]);
-			$note->setFecha(date('YYYY,mm,dd'));
+			//$note->setFecha(getdate());
 			try{
 				$errors = array();
 				if($_SESSION["currentuser"]){
