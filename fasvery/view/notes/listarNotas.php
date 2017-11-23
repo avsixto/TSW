@@ -26,7 +26,7 @@ $errors = $view->getVariable("errors");
 				<div class="container">
 				<div class="tituloListar"><h1>Notas Publicadas</h1></div>
 				<?php foreach($listaNotas as $nota){ ?>
-					<form class="formListarNota" action="index.php?controller=Notas&amp;action=nueva" method="POST">
+					<form class="formListarNota" action="index.php?controller=Notas&amp;action=listarNotas" method="POST">
 						<fieldset>
 								<legend align="center"><h1> <?=$nota->getTitulo()?></h1></legend>
 								<div class="form">
@@ -36,6 +36,7 @@ $errors = $view->getVariable("errors");
 									<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 								</div>
 								<div class="btnOpcionesNotas">
+								
 								<button class="btnVer" onClick=""><span class="icon-eye2"></span></button>
 								<button class="btnEditar"><span class="icon-pencil22"></span></button>
 								<button class="btnCompartir"><span class="icon-share-alt"></span></button>

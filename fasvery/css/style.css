@@ -115,6 +115,22 @@ footer {
 		margin-top: 600px;
 	}
 
+.btnVer:hover {
+	background-color: #ff93ff;
+}
+
+.btnEditar:hover {
+	background-color: #ff93ff;
+}
+
+.btnCompartir:hover {
+	background-color: #ff93ff;
+}
+
+.btnEliminar:hover {
+	background-color: #ff93ff;
+}
+
 @media screen and (max-width : 576px ){/*cambia de modo el menu*/
 	
 	header {
