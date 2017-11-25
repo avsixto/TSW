@@ -12,12 +12,11 @@
 <body>
 <div id="contenedor">
 	<section>
-			<head>
+			<article>
 				<meta charset="utf-8">
 				<link rel="stylesheet" href="./css/formularios.css">
 				<title>registroUsuario</title>
-			</head>
-			<body>
+			</article>
 			<div class="container">
 				<form class="formCompartirNota2" action="">
 					<fieldset>
@@ -34,7 +33,6 @@
 					</fieldset>
 				</form>
 			</div>
-			</body>
 	</section>
 </div>
 </body>

@@ -17,12 +17,11 @@ $errors = $view->getVariable("errors");
 <body>
 	<div id="contenedor">
 		<section>
-				<head>
+				<article>
 					<meta charset="utf-8">
 					<link rel="stylesheet" href="./css/formularios.css">
 					<title>registroUsuario</title>
-				</head>
-				<body>
+				</article>			
 				<div class="container">
 				<div class="tituloListar"><h1>Notas Publicadas</h1></div>
 				<?php foreach($listaNotas as $nota){ ?>
@@ -47,7 +46,6 @@ $errors = $view->getVariable("errors");
 				<?php } ?>
 				<div><h1>Notas Compartidas Conmigo</h1></div>
 				</div>
-				</body>
 		</section>
 	</div>
 </body>
