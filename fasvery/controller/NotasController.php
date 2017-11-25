@@ -32,6 +32,9 @@ class NotasController extends BaseController {
 	* @return void
 	*/
 	public function nueva() {
+		if (!isset($this->currentUser)) {
+			throw new Exception("Not in session. Adding posts requires login");
+		}
 		if(isset($_POST["titulo"]) && isset($_POST["contenido"])){
 			$note = new Nota();
 			$note->setTitulo($_POST["titulo"]);
@@ -57,6 +60,9 @@ class NotasController extends BaseController {
 	}
 	
 	public function listarNotas(){
+		if (!isset($this->currentUser)) {
+			throw new Exception("Not in session. Adding posts requires login");
+		}
 		if($_SESSION["currentuser"]){
 			try{
 				$alias=$_SESSION["currentuser"];
