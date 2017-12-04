@@ -15,11 +15,10 @@ class NotaMapper {
 	/**
 	* Añade una nueva nota a la bbdd
 	**/
-	public function save($alias, $note) {
+	public function save($note) {
 		$stmt = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
-		$stmt->execute(array($alias));
+		$stmt->execute(array($_SESSION["currentuser"]));
 		$fk_idUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		$id;
 		foreach ($fk_idUsuario as $id){
 		$stmtN = $this->db->prepare("INSERT INTO nota (titulo, contenido, fecha ,fk_idUsuario) values (?,?,?,?)");
 		$stmtN->execute(array($note->getTitulo(), $note->getContenido(), $note->getFecha(), $id["idUsuario"]));
@@ -53,17 +52,16 @@ class NotaMapper {
 	/*
 	* Obtiene una lista con las notas publicadas de ese usuario
 	*/
-	public function listNote($alias){
+	public function listNote(){
 		$stmt = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
-		$stmt->execute(array($alias));
-		$fk_idUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		$id;
-		foreach ($fk_idUsuario as $id){
-			$stmt = $this->db->prepare("SELECT nota.*,usuario.nombre FROM nota,usuario WHERE fk_idUsuario=?");
-			$stmt->execute(array($id["idUsuario"]));
-			$notas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		}
-		$listaNotas=array();
+		$stmt->execute(array($_SESSION["currentuser"]));
+		$stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$idUsuario=$stmt["0"];//id del usuario Actual
+		//obtenemos todas las notas para ese usuario
+		$stmt = $this->db->prepare("SELECT nota.*,usuario.nombre FROM nota,usuario WHERE fk_idUsuario=usuario.idUsuario AND usuario.idUsuario=?");
+		$stmt->execute(array($idUsuario["idUsuario"]));
+		$notas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$listaNotas=array();//lista con notas para ese usuario
 		foreach($notas as $nota){
 			array_push($listaNotas, new Nota($nota["idNota"], $nota["titulo"], $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"], $nota["nombre"]));
 		}

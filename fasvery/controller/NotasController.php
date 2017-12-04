@@ -39,7 +39,7 @@ class NotasController extends BaseController {
 			try{
 				$errors = array();
 				if($_SESSION["currentuser"]){
-					$this->NotaMapper->save($_SESSION["currentuser"],$note);
+					$this->NotaMapper->save($note);
 				}else{
 					$errors["username"] = "Username and/or password not exists in system";
 					$this->view->setFlash("errors: ".$errors["username"]);
@@ -64,7 +64,7 @@ class NotasController extends BaseController {
 		}
 		if($_SESSION["currentuser"]){
 				$alias=$_SESSION["currentuser"];
-				$listNota=$this->NotaMapper->listNote($alias);
+				$listNota=$this->NotaMapper->listNote();
 				if ($listNota == NULL) {
 					$this->view->setVariable("creadas","No ha publicado ninguna nota");//se mostrada que no hay notas publicadas
 				}else{
