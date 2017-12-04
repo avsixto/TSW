@@ -1,9 +1,9 @@
 <?php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$currentuser = $view->getVariable("currentusername");
 $listaNotas = $view->getVariable("notes");
-$errors = $view->getVariable("errors");
+$compartidas = $view->getVariable("compartidas");
+$creadas = $view->getVariable("creadas");
 ?>
 <head>
 	<meta charset="utf-8">
@@ -24,7 +24,10 @@ $errors = $view->getVariable("errors");
 				</article>			
 				<div class="container">
 				<div class="tituloListar"><h1>Notas Publicadas</h1></div>
-				<?php foreach($listaNotas as $nota){ ?>
+				<div id="creadas"><?=$creadas?></div>
+				<?php if(!empty($listaNotas)){
+					foreach($listaNotas as $nota){ 
+				?>
 					<form class="formListarNota" action="index.php?controller=Notas&amp;action=listarNotas" method="POST">
 						<fieldset>
 								<legend align="center"><h1> <?=$nota->getTitulo()?></h1></legend>
@@ -44,8 +47,10 @@ $errors = $view->getVariable("errors");
 								</div>
 						</fieldset>
 					</form>
-				<?php } ?>
-				<div><h1>Notas Compartidas Conmigo</h1></div>
+				<?php }
+				}?>
+				<div><h1>Notas Compartidas</h1></div>
+				<div id="creadas"><?=$compartidas?></div>
 				</div>
 		</section>
 	</div>

@@ -63,22 +63,15 @@ class NotasController extends BaseController {
 			$this->view->redirect("Usuario","login");
 		}
 		if($_SESSION["currentuser"]){
-			try{
 				$alias=$_SESSION["currentuser"];
 				$listNota=$this->NotaMapper->listNote($alias);
 				if ($listNota == NULL) {
-					throw new Exception("no notes found");
-					$this->view->setVariable("errors","no notes found");
+					$this->view->setVariable("creadas","No ha publicado ninguna nota");//se mostrada que no hay notas publicadas
+				}else{
+					$this->view->setVariable("creadas","");//no se muestra ningun mensaje
+					$this->view->setVariable("currentuser", $alias);
+					$this->view->setVariable("notes", $listNota);
 				}
-				$this->view->setVariable("currentuser", $alias);
-				$this->view->setVariable("notes", $listNota);
-				
-			}catch(ValidationException $ex){
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
-			}
 		}
 		$this->view->render("notes", "listarNotas");
 	}
