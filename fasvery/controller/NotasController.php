@@ -23,17 +23,13 @@ class NotasController extends BaseController {
 		// different to the "default" layout where the internal
 	}
 	
-	/**
-	* Action to note
-	
-	* When called via GET, nuew note form.
-	* When called via POST, it tries to create a new note.
-	
-	* @return void
+	/*nueva
+	*Crea una nueva nota
+	*Es necesario esta logeado, en caso contrario requerira que el usuario se autentique
 	*/
 	public function nueva() {
 		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
+			$this->view->redirect("Usuario","login");
 		}
 		if(isset($_POST["titulo"]) && isset($_POST["contenido"])){
 			$note = new Nota();
@@ -55,13 +51,16 @@ class NotasController extends BaseController {
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-		/*muestra el usuarioLogIn*/
 		$this->view->render("notes", "crearNota");
 	}
 	
+	/*listarNotas
+	*Lista todas las notas para un usuario
+	*Si la sesion no esta iniciada pedira que se inicie
+	*/
 	public function listarNotas(){
 		if (!isset($this->currentUser)) {
-			throw new Exception("Not in session. Adding posts requires login");
+			$this->view->redirect("Usuario","login");
 		}
 		if($_SESSION["currentuser"]){
 			try{
@@ -81,8 +80,24 @@ class NotasController extends BaseController {
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-		/*muestra el usuarioLogIn*/
 		$this->view->render("notes", "listarNotas");
+	}
+
+	/*eliminarNotas
+	*Elimina una nota
+	*Es necesario ser el propietario
+	*/
+	public function eliminarNotas(){
+		if (!isset($this->currentUser)) {
+			$this->view->redirect("Usuario","login");
+		}
+		if(isset($_GET["idNota"]) && $this->NotaMapper->drop($_GET["idNota"])){
+			$this->view->setFlash("Nota Eliminada correctamente");
+
+		}else{
+			$this->view->setFlash("ERROR: No se ha podido eliminar la nota");
+		}//Refresca la vista.
+		self::listarNotas();
 	}
 }
 ?>

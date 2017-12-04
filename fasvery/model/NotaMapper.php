@@ -28,10 +28,15 @@ class NotaMapper {
 	
 	/**
 	* Elimina una nota en la bbdd
+	* Sólo si se es el que la ha publicado
 	**/
 	public function drop($idNota) {
-		$stmt = $this->db->prepare("DELE FROM nota WHERE idNota =?");
-		$stmt->execute(array($idNota));
+		if(self::permisoNota($idNota)){
+			$stmt = $this->db->prepare("DELETE FROM nota WHERE idNota =?");
+			$stmt->execute(array($idNota));
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -65,20 +70,20 @@ class NotaMapper {
 		return $listaNotas;
 	}
 
-	public function listNoteOriginal($alias){
-		$stmt = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
-		$stmt->execute(array($alias));
-		$fk_idUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		$id;
-		foreach ($fk_idUsuario as $id){
-			$stmt = $this->db->prepare("SELECT * FROM nota WHERE fk_idUsuario=?");
-			$stmt->execute(array($id["idUsuario"]));
-			$notas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	private function permisoNota($idNota){
+		if(isset($_SESSION["currentuser"])){
+			$stmt = $this->db->prepare("SELECT fk_idUsuario FROM nota WHERE idNota=?");
+			$stmt -> execute(array($idNota));
+			$stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);//id usuario de la nota
+			$stmt2 = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
+			$stmt2->execute(array($_SESSION["currentuser"]));
+			$stmt2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);//id usuario actual
+			$idPropietario=$stmt["0"];//id del propietario de la nota
+			$idUsuario=$stmt2["0"];//id del usuario Actual
+			if ($idUsuario["idUsuario"]==$idPropietario["fk_idUsuario"]) {
+				return true;
+			}
 		}
-		$listaNotas=array();
-		foreach($notas as $nota){
-			array_push($listaNotas, new Nota($nota["idNota"], $nota["titulo"], $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"]));
-		}
-		return $listaNotas;
+		return false;
 	}
 }

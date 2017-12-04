@@ -36,10 +36,11 @@ $errors = $view->getVariable("errors");
 								</div>
 								<div class="btnOpcionesNotas">
 								
-								<button class="btnVer" onClick=""><span class="icon-eye2"></span></button>
-								<button class="btnEditar"><span class="icon-pencil22"></span></button>
-								<button class="btnCompartir"><span class="icon-share-alt"></span></button>
-								<button class="btnEliminar"><span class="icon-trash"></span></button>
+									<button class="btnVer" onClick=""><span class="icon-eye2"></span></button>
+									<button class="btnEditar"><span class="icon-pencil22"></span></button>
+									<button class="btnCompartir"><span class="icon-share-alt"></span></button>
+									<a href='./index.php?controller=Notas&amp;action=eliminarNotas&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-trash"></span>
+									</a>
 								</div>
 						</fieldset>
 					</form>
