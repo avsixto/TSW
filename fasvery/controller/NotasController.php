@@ -76,6 +76,11 @@ class NotasController extends BaseController {
 		$this->view->render("notes", "listarNotas");
 	}
 
+	public function verNota(){
+		$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+		$this->view->render("notes", "verNota");
+	}
+
 	/*eliminarNotas
 	*Elimina una nota
 	*Es necesario ser el propietario

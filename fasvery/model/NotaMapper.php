@@ -38,18 +38,33 @@ class NotaMapper {
 		return false;
 	}
 	
-	/**
+	/**noteExists
 	* comprueba si la nota existe
 	**/
 	public function noteExists($idNota) {
 		$stmt = $this->db->prepare("SELECT count(idNota) FROM nota where idNota=?");
-		$stmt->execute(array(idNota));
+		$stmt->execute(array($idNota));
 		if ($stmt->fetchColumn() > 0) {
 			return true;
 		}
+		return false;
 	}
+
+	/*getNoteByID
+	* devuelve una nota a partir de un id
+	*/
+	public function getNoteByID($idNota){
+		if(self::noteExists($idNota)){//comprobamos que la nota exista por seguridad
+			$stmt = $this->db->prepare("SELECT * FROM nota WHERE idNota=?");
+			$stmt->execute(array($idNota));
+			$stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$nota=$stmt["0"];
+			return $nota=new Nota($nota["idNota"],$nota["titulo"],$nota["contenido"],$nota["fecha"],$nota["fk_idUsuario"]);//devuelvo la única nota con ese id
+			}
+			return NULL;
+		}
 	
-	/*
+	/*listNote
 	* Obtiene una lista con las notas publicadas de ese usuario
 	* Controla el tamaño del formulario para que no se desajuste el titulo en el legend
 	* No se ha creado en un .js aparte por que sólo para eso no merecía la pena crear un .js

@@ -1,3 +1,8 @@
+<?php
+require_once(__DIR__."/../../core/ViewManager.php");
+$view = ViewManager::getInstance();
+$nota = $view->getVariable("nota");
+?>
 <!doctype html>
 <html>
 <head>
@@ -23,13 +28,11 @@
 							<legend align="center"><h1><span class="icon-eye2"></span>Ver Nota</h1></legend>
 							<div class="form">
 							<div class="formDatos">
-								<label class="labelId"><span class="icon-npm"></span>ID</label>
-								<label class="labelAutor"><span class="icon-id-card"></span>Autor</label>
-								<label class="labelFecha"><span class="icon-sun-o"></span>Fecha</label>
-							</div>
-							<input class="inputTitulo" type="text" placeholder="Título" readonly>
-							<textarea class="inputContenido" type="text" placeholder="Contenido" readonly></textarea>
-							</div>
+								<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
+								<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$nota->getAutor()?></label>
+								<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+								<input class="inputTitulo" type="text" placeholder="Título" readonly value=<?=$nota->getTitulo()?>>
+								<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 							<div class="btnOpcionesNotas">
 							<button class="btnEditar" onClick="editarNota.html"><span class="icon-pencil22"></span></button>
 							<button class="btnCompartir" onClick="compartirNota.html"><span class="icon-share-alt"></span></button>
