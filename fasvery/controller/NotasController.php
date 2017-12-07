@@ -8,7 +8,6 @@ require_once(__DIR__."/../controller/BaseController.php");
 /**
 *Controller to users, logout and user registration
 **/
-
 class NotasController extends BaseController {
 	
 	private $NotaMapper;
@@ -66,7 +65,7 @@ class NotasController extends BaseController {
 				$alias=$_SESSION["currentuser"];
 				$listNota=$this->NotaMapper->listNote();
 				if ($listNota == NULL) {
-					$this->view->setVariable("creadas","No ha publicado ninguna nota");//se mostrada que no hay notas publicadas
+					$this->view->setVariable("creadas","No ha publicado ninguna nota");//se muestra que no hay notas publicadas
 				}else{
 					$this->view->setVariable("creadas","");//no se muestra ningun mensaje
 					$this->view->setVariable("currentuser", $alias);
@@ -76,8 +75,12 @@ class NotasController extends BaseController {
 		$this->view->render("notes", "listarNotas");
 	}
 
+	/*verNota
+	*Muestra una nota en detalle
+	*/
 	public function verNota(){
 		$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+		$this->view->setVariable("alias",$_SESSION["currentuser"]);
 		$this->view->render("notes", "verNota");
 	}
 

@@ -65,7 +65,7 @@ class Nota {
 		$this->nombreAutor = $nombreAutor;
 	}
 	
-		public function checkIsValidForUpdate() {
+	public function checkIsValidForUpdate() {
 		$errors = array();
 		if (!isset($this->idNota)) {
 			$errors["idNota"] = "El id es obligatorio";

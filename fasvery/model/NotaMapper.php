@@ -75,7 +75,7 @@ class NotaMapper {
 		$stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$idUsuario=$stmt["0"];//id del usuario Actual
 		//obtenemos todas las notas para ese usuario
-		$stmt = $this->db->prepare("SELECT nota.*,usuario.nombre FROM nota,usuario WHERE fk_idUsuario=usuario.idUsuario AND usuario.idUsuario=?");
+		$stmt = $this->db->prepare("SELECT nota.* FROM nota,usuario WHERE fk_idUsuario=usuario.idUsuario AND usuario.idUsuario=?");
 		$stmt->execute(array($idUsuario["idUsuario"]));
 		$notas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$listaNotas=array();//lista con notas para ese usuario
@@ -85,7 +85,7 @@ class NotaMapper {
 			}else{
 				$titulo=$nota["titulo"];
 			}
-			array_push($listaNotas, new Nota($nota["idNota"],$titulo, $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"], $nota["nombre"]));
+			array_push($listaNotas, new Nota($nota["idNota"],$titulo, $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"], $_SESSION["currentuser"]));
 		}
 		return $listaNotas;
 	}

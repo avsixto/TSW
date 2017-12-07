@@ -2,6 +2,7 @@
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $nota = $view->getVariable("nota");
+$alias=$view->getVariable("alias");
 ?>
 <!doctype html>
 <html>
@@ -29,7 +30,7 @@ $nota = $view->getVariable("nota");
 							<div class="form">
 							<div class="formDatos">
 								<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
-								<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$nota->getAutor()?></label>
+								<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
 								<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
 								<input class="inputTitulo" type="text" placeholder="Título" readonly value=<?=$nota->getTitulo()?>>
 								<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
