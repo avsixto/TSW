@@ -27,30 +27,40 @@ class NotasController extends BaseController {
 	*Es necesario esta logeado, en caso contrario requerira que el usuario se autentique
 	*/
 	public function nueva() {
-		if (!isset($this->currentUser)) {
-			$this->view->redirect("Usuario","login");
-		}
-		if(isset($_POST["titulo"]) && isset($_POST["contenido"])){
-			$note = new Nota();
-			$note->setTitulo($_POST["titulo"]);
-			$note->setContenido($_POST["contenido"]);
-			//$note->setFecha(getdate());
-			try{
-				$errors = array();
-				if($_SESSION["currentuser"]){
-					$this->NotaMapper->save($note);
-				}else{
-					$errors["username"] = "Username and/or password not exists in system";
-					$this->view->setFlash("errors: ".$errors["username"]);
+		if(self::logeado()){
+			if(isset($_POST["titulo"]) && isset($_POST["contenido"])){
+				$note = new Nota();
+				$note->setTitulo($_POST["titulo"]);
+				$note->setContenido($_POST["contenido"]);
+				//$note->setFecha(getdate());
+				try{
+					$errors = array();
+					if($_SESSION["currentuser"]){
+						$this->NotaMapper->save($note);
+					}else{
+						$errors["username"] = "Username and/or password not exists in system";
+						$this->view->setFlash("errors: ".$errors["username"]);
+					}
+				}catch(ValidationException $ex){
+					// Get the errors array inside the exepction...
+					$errors = $ex->getErrors();
+					// And put it to the view as "errors" variable
+					$this->view->setVariable("errors", $errors);
 				}
-			}catch(ValidationException $ex){
-				// Get the errors array inside the exepction...
-				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
-				$this->view->setVariable("errors", $errors);
 			}
+			$this->view->render("notes", "crearNota");
 		}
-		$this->view->render("notes", "crearNota");
+	}
+
+	/*verNota
+	*Muestra una nota en detalle
+	*/
+	public function verNota(){
+		if(self::logeado()){
+			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+			$this->view->setVariable("alias",$_SESSION["currentuser"]);
+			$this->view->render("notes", "verNota");
+		}
 	}
 	
 	/*listarNotas
@@ -58,10 +68,7 @@ class NotasController extends BaseController {
 	*Si la sesion no esta iniciada pedira que se inicie
 	*/
 	public function listarNotas(){
-		if (!isset($this->currentUser)) {
-			$this->view->redirect("Usuario","login");
-		}
-		if($_SESSION["currentuser"]){
+		if(self::logeado()){
 				$alias=$_SESSION["currentuser"];
 				$listNota=$this->NotaMapper->listNote();
 				if ($listNota == NULL) {
@@ -71,20 +78,25 @@ class NotasController extends BaseController {
 					$this->view->setVariable("currentuser", $alias);
 					$this->view->setVariable("notes", $listNota);
 				}
+			$this->view->render("notes", "listarNotas");
 		}
-		$this->view->render("notes", "listarNotas");
 	}
 
-	/*verNota
-	*Muestra una nota en detalle
+	/*editar
+	* Si se llama con un get muestra la nota en vista completa para editarla
+	* Si se llama con un post editar la nota actualizandola en la base de datos
 	*/
-	public function verNota(){
-		if (!isset($this->currentUser)) {
-			$this->view->redirect("Usuario","login");
+	public function editar(){
+		if(self::logeado()){
+			if(isset($_POST["idNota"]) && isset($_POST["titulo"]) && isset($_POST["contenido"])){
+				$this->NotaMapper->editar(new Nota($_POST["idNota"],$_POST["titulo"],$_POST["contenido"]));
+				$this->view->setFlash("Nota Editada correctamente");
+				self::listarNotas();
+			}
+			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+			$this->view->setVariable("alias",$_SESSION["currentuser"]);
+			$this->view->render("notes","editarNota");
 		}
-		$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
-		$this->view->setVariable("alias",$_SESSION["currentuser"]);
-		$this->view->render("notes", "verNota");
 	}
 
 	/*eliminarNotas
@@ -92,16 +104,25 @@ class NotasController extends BaseController {
 	*Es necesario ser el propietario
 	*/
 	public function eliminarNotas(){
+		if(self::logeado()){
+			if(isset($_GET["idNota"]) && $this->NotaMapper->drop($_GET["idNota"])){
+				$this->view->setFlash("Nota Eliminada correctamente");
+			}else{
+				$this->view->setFlash("ERROR: No se ha podido eliminar la nota");
+			}//Refresca la vista.
+			self::listarNotas();
+		}
+	}
+
+	/*logeado
+	* Si el usuario no esta logeado lo manda a la vista de loging
+	* Si esta logeado devuelve un true;
+	*/
+	private function logeado(){
 		if (!isset($this->currentUser)) {
 			$this->view->redirect("Usuario","login");
 		}
-		if(isset($_GET["idNota"]) && $this->NotaMapper->drop($_GET["idNota"])){
-			$this->view->setFlash("Nota Eliminada correctamente");
-
-		}else{
-			$this->view->setFlash("ERROR: No se ha podido eliminar la nota");
-		}//Refresca la vista.
-		self::listarNotas();
+		return true;
 	}
 }
 ?>

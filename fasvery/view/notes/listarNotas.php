@@ -40,8 +40,11 @@ $creadas = $view->getVariable("creadas");
 								<div class="btnOpcionesNotas">
 									<a href='./index.php?controller=Notas&amp;action=verNota&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-eye2"></span>
 									</a>
-									<button class="btnEditar"><span class="icon-pencil22"></span></button>
+									<a href='./index.php?controller=Notas&amp;action=editar&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-pencil22"></span>
+									</a>
+
 									<button class="btnCompartir"><span class="icon-share-alt"></span></button>
+									
 									<a href='./index.php?controller=Notas&amp;action=eliminarNotas&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-trash"></span>
 									</a>
 								</div>

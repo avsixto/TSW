@@ -12,7 +12,7 @@ class NotaMapper {
 		$this->db = PDOConnection::getInstance();
 	}
 	
-	/**
+	/**save
 	* Añade una nueva nota a la bbdd
 	**/
 	public function save($note) {
@@ -23,31 +23,6 @@ class NotaMapper {
 		$stmtN = $this->db->prepare("INSERT INTO nota (titulo, contenido, fecha ,fk_idUsuario) values (?,?,?,?)");
 		$stmtN->execute(array($note->getTitulo(), $note->getContenido(), $note->getFecha(), $id["idUsuario"]));
 		}
-	}
-	
-	/**
-	* Elimina una nota en la bbdd
-	* Sólo si se es el que la ha publicado
-	**/
-	public function drop($idNota) {
-		if(self::permisoNota($idNota)){
-			$stmt = $this->db->prepare("DELETE FROM nota WHERE idNota =?");
-			$stmt->execute(array($idNota));
-			return true;
-		}
-		return false;
-	}
-	
-	/**noteExists
-	* comprueba si la nota existe
-	**/
-	public function noteExists($idNota) {
-		$stmt = $this->db->prepare("SELECT count(idNota) FROM nota where idNota=?");
-		$stmt->execute(array($idNota));
-		if ($stmt->fetchColumn() > 0) {
-			return true;
-		}
-		return false;
 	}
 
 	/*getNoteByID
@@ -81,7 +56,7 @@ class NotaMapper {
 		$listaNotas=array();//lista con notas para ese usuario
 		foreach($notas as $nota){
 			if(strlen($nota["titulo"])>13){//para que no se desajuste el tamaño de formulario
-				$titulo=substr($nota["titulo"], 0, 13)."...";
+				$titulo=substr($nota["titulo"], 0, 10)."...";
 			}else{
 				$titulo=$nota["titulo"];
 			}
@@ -90,6 +65,51 @@ class NotaMapper {
 		return $listaNotas;
 	}
 
+	/*editar
+	* Permite editar el titulo y el contenido de una nota
+	* No se podrá editar la fecha, el autor o el id
+	* Es necesario que la nota exista y seamos el autor
+	*/
+	public function editar($nota){
+		if(self::noteExists($nota->getIdNota()) && self::permisoNota($nota->getIdNota())){
+			$stmt=$this->db->prepare("UPDATE nota SET titulo=?, contenido=? WHERE idNota=?");
+			$stmt->execute(array($nota->getTitulo(),$nota->getContenido(),$nota->getIdNota()));
+			return true;
+		}
+		return false;
+	}
+	
+	/**drop
+	* Elimina una nota en la bbdd
+	* Es necesario ser el autor
+	**/
+	public function drop($idNota) {
+		if(self::permisoNota($idNota)){
+			$stmt = $this->db->prepare("DELETE FROM nota WHERE idNota =?");
+			$stmt->execute(array($idNota));
+			return true;
+		}
+		return false;
+	}
+	
+	/**noteExists
+	* comprueba si la nota existe
+	**/
+	public function noteExists($idNota) {
+		$stmt = $this->db->prepare("SELECT count(idNota) FROM nota where idNota=?");
+		$stmt->execute(array($idNota));
+		if ($stmt->fetchColumn() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	/*permisoNota
+	* Es una funcion privada
+	* Sólo se llama desde la propia clase
+	* Devuelve true si el autor de una nota es el actual
+	* Es necesario estar logeado en el sistema si no se dará por supuesto que no es el autor
+	*/
 	private function permisoNota($idNota){
 		if(isset($_SESSION["currentuser"])){
 			$stmt = $this->db->prepare("SELECT fk_idUsuario FROM nota WHERE idNota=?");

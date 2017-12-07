@@ -1,3 +1,9 @@
+<?php
+require_once(__DIR__."/../../core/ViewManager.php");
+$view = ViewManager::getInstance();
+$nota = $view->getVariable("nota");
+$alias=$view->getVariable("alias");
+?>
 <!doctype html>
 <html>
 <head>
@@ -18,17 +24,17 @@
 				<title>registroUsuario</title>
 			</article>
 			<div class="container">
-				<form class="formEditarNota" action="">
+				<form class="formEditarNota" action="index.php?controller=Notas&amp;action=editar" method="POST">
 					<fieldset>
-							<legend align="center"><h1><span class="icon-pencil22"></span>Editar Nota</h1></legend>
-							<div class="form">
-							<input class="inputTitulo" type="text" placeholder="Título" required>
-							<textarea class="inputContenido" type="text" placeholder="Contenido" required></textarea>
-							</div>
+							<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
+							<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
+							<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+							<input class="inputidNota" name="idNota" type="text" hidden="true" required="true" value="<?=$nota->getIdNota()?>">
+							<input class="inputTitulo" name="titulo" type="text" placeholder="Título" required="true" value="<?=$nota->getTitulo()?>">
+							<textarea class="inputContenido" name="contenido" type="text" required="true"> <?= $nota->getContenido()?></textarea>
 							<div class="btnForm">
-								<input class="btnSubmit" type="submit" value="Editar">
-								<input class="btnReset" type="reset" value="Limpiar">
-							</div>
+							<input class="btnSubmit" type="submit" value="editar">
+						</div>
 					</fieldset>
 				</form>
 			</div>

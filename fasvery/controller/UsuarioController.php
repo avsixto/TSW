@@ -24,7 +24,6 @@ class UsuarioController extends BaseController {
 
 	public function login() {
 		if(isset($_POST["alias"]) && isset($_POST["password"])){
-				$errors = array();
 				if($this->UsuarioMapper->isValidUser($_POST["alias"],$_POST["password"])){
 					$_SESSION["currentuser"]=$_POST["alias"];
 					$this->view->redirect("Notas","listarNotas");
@@ -32,7 +31,6 @@ class UsuarioController extends BaseController {
 					$this->view->setFlash("AVISO: "."El usuario/contraseña no Existe");
 				}
 		}
-		/*muestra el usuarioLogIn*/
 		$this->view->render("users", "logIn");
 	}
 
