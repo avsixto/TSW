@@ -78,8 +78,21 @@ class NotaMapper {
 		}
 		return false;
 	}
+
+	/*compartir
+	* Permite compartir una nota con un usuario
+	* Es necesario que la nota exista y ser el propietario para poder compartirla
+	*/
+	public function compartir($idUsuario, $idNota){
+		if(self::noteExists($nota->getIdNota()) && self::permisoNota($nota->getIdNota())){
+			$stmt=$this->db->prepare("INSERT INTO compartida(fk_idUsuario,fk_idNota ) VALUES(?,?)");
+			$stmt->execute(array($idUsuario,$idNota));
+			return true;
+		}
+		return false;
+	}
 	
-	/**drop
+	/*drop
 	* Elimina una nota en la bbdd
 	* Es necesario ser el autor
 	**/
@@ -95,7 +108,7 @@ class NotaMapper {
 	/**noteExists
 	* comprueba si la nota existe
 	**/
-	public function noteExists($idNota) {
+	private function noteExists($idNota) {
 		$stmt = $this->db->prepare("SELECT count(idNota) FROM nota where idNota=?");
 		$stmt->execute(array($idNota));
 		if ($stmt->fetchColumn() > 0) {

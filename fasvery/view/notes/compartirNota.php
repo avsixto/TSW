@@ -1,3 +1,10 @@
+<?php
+require_once(__DIR__."/../../core/ViewManager.php");
+
+$view = ViewManager::getInstance();
+$listaAlias = $view->getVariable("alias");
+
+?>
 <!doctype html>
 <html>
 <head>
@@ -23,9 +30,11 @@
 							<legend align="center"><h1><span class="icon-share-alt"></span>Compartir</h1></legend>
 							<div class="formCompartir">
 								<input class="inputTituloComartir" type="text" placeholder="Título" readonly>
-								<div class="check"><label>Usuario1 </label><input type="checkbox"></div>
-								<div class="check"><label>Usuario2 </label><input type="checkbox"></div>
-								<div class="check"><label>Usuario3 </label><input type="checkbox"></div>
+								 <select>
+								 	<?php foreach ($listaAlias as $alias) {?>
+								 		<option value="<?$alias?>">$alias</option>
+								 	<?}?>
+								</select> 
 							</div>
 							<div class="btnForm">
 								<input class="btnSubmit" type="submit" value="Compartir">

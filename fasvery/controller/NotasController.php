@@ -3,6 +3,7 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Nota.php");
 require_once(__DIR__."/../model/NotaMapper.php");
+require_once(__DIR__."/../model/UsuarioMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 /**
@@ -100,11 +101,20 @@ class NotasController extends BaseController {
 	}
 
 	/*compartir
-	* Si se llama con un get muestra la nota en vista para compartir notas
-	* Si se llama con un post permite compartir notas
+	* Permite compartir una nota con varios usuarios.
 	*/
 	public function compartir(){
-		$this->view->render("notes","compartirNota");
+		$usuarioMapper = new UsuarioMapper();
+		if(self::logeado()){
+			if(isset($_POST["idNota"]) && isset($_POST["ListaAlias"]) ){
+				foreach ($ListaAlias as $alias) {
+					$this->NotaMapper->compartir($usuarioMapper->getIdByAlias($alias),$_POST["idNota"]);
+				}
+				$this->view->setFlash("Nota Compartida correctamente");
+				self::listarNotas();
+			}
+			$this->view->render("notes", "listarNotas");
+		}
 	}
 
 	/*eliminarNotas
@@ -120,6 +130,14 @@ class NotasController extends BaseController {
 			}//Refresca la vista.
 			self::listarNotas();
 		}
+	}
+
+	/*listaAlias
+	* Envia una lista de usuarios a la vista
+	*/
+	private function listaAlias(){
+		$usuarioMapper = new UsuarioMapper();
+		$this->view->setVariable("listaAlias",$usuarioMapper->getAlias());
 	}
 
 	/*logeado
