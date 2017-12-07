@@ -74,7 +74,7 @@ body {
 	flex-direction:column;/*Cuando no hay espacio alinea las cajas de texto en columna*/
 	text-align: center;
 	margin-bottom: 20px;
-	min-width: 25%;
+	max-width: 25%;
 }
 
 .formCompartir{

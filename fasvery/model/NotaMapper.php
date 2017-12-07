@@ -51,6 +51,8 @@ class NotaMapper {
 	
 	/*
 	* Obtiene una lista con las notas publicadas de ese usuario
+	* Controla el tamaño del formulario para que no se desajuste el titulo en el legend
+	* No se ha creado en un .js aparte por que sólo para eso no merecía la pena crear un .js
 	*/
 	public function listNote(){
 		$stmt = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
@@ -63,7 +65,12 @@ class NotaMapper {
 		$notas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$listaNotas=array();//lista con notas para ese usuario
 		foreach($notas as $nota){
-			array_push($listaNotas, new Nota($nota["idNota"], $nota["titulo"], $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"], $nota["nombre"]));
+			if(strlen($nota["titulo"])>13){//para que no se desajuste el tamaño de formulario
+				$titulo=substr($nota["titulo"], 0, 13)."...";
+			}else{
+				$titulo=$nota["titulo"];
+			}
+			array_push($listaNotas, new Nota($nota["idNota"],$titulo, $nota["contenido"], $nota["fecha"],$nota["fk_idUsuario"], $nota["nombre"]));
 		}
 		return $listaNotas;
 	}

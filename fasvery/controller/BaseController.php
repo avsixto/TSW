@@ -43,5 +43,9 @@ class BaseController {
 			$this->view->setVariable("currentusername",
 					$this->currentUser->getAlias());
 		}
+		if($this->view->popFlash()!=""){// para que no se muestren mensajes entre vistas diferentes
+			$this->view->setFlash("");
+		}
+		
 	}
 }
