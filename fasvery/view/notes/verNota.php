@@ -32,7 +32,7 @@ $alias=$view->getVariable("alias");
 								<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
 								<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
 								<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
-								<input class="inputTitulo" type="text" placeholder="Título" readonly value=<?=$nota->getTitulo()?>>
+								<input class="inputTitulo" type="text" placeholder="Título" readonly value="<?=$nota->getTitulo()?>">
 								<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 							<div class="btnOpcionesNotas">
 							<button class="btnEditar" onClick="editarNota.html"><span class="icon-pencil22"></span></button>

@@ -79,6 +79,9 @@ class NotasController extends BaseController {
 	*Muestra una nota en detalle
 	*/
 	public function verNota(){
+		if (!isset($this->currentUser)) {
+			$this->view->redirect("Usuario","login");
+		}
 		$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
 		$this->view->setVariable("alias",$_SESSION["currentuser"]);
 		$this->view->render("notes", "verNota");
