@@ -99,6 +99,14 @@ class NotasController extends BaseController {
 		}
 	}
 
+	/*compartir
+	* Si se llama con un get muestra la nota en vista para compartir notas
+	* Si se llama con un post permite compartir notas
+	*/
+	public function compartir(){
+		$this->view->render("notes","compartirNota");
+	}
+
 	/*eliminarNotas
 	*Elimina una nota
 	*Es necesario ser el propietario

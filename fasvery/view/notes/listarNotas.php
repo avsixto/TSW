@@ -38,14 +38,13 @@ $creadas = $view->getVariable("creadas");
 									<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 								</div>
 								<div class="btnOpcionesNotas">
-									<a href='./index.php?controller=Notas&amp;action=verNota&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-eye2"></span>
+									<a class="btnVer" href='./index.php?controller=Notas&amp;action=verNota&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-eye2"></span>
 									</a>
-									<a href='./index.php?controller=Notas&amp;action=editar&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-pencil22"></span>
+									<a class="btnEditar" href='./index.php?controller=Notas&amp;action=editar&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-pencil22"></span>
 									</a>
-
-									<button class="btnCompartir"><span class="icon-share-alt"></span></button>
-									
-									<a href='./index.php?controller=Notas&amp;action=eliminarNotas&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-trash"></span>
+									<a class="btnCompartir" href='./index.php?controller=Notas&amp;action=compartir&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-share-alt"></span>
+									</a>
+									<a class="btnEliminar" href='./index.php?controller=Notas&amp;action=eliminarNotas&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-trash"></span>
 									</a>
 								</div>
 						</fieldset>
