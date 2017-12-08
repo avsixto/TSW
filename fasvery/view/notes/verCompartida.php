@@ -22,16 +22,16 @@ $alias=$view->getVariable("alias");
 				<meta charset="utf-8">
 				<link rel="stylesheet" href="./css/formularios.css">
 				<title>registroUsuario</title>
-			</article>		
+			</article>
 			<div class="container">
 				<form class="formCrearNota" action="">
 					<fieldset>
-							<legend align="center"><h1><span class="icon-eye2"></span>Ver Nota</h1></legend>
+							<legend align="center"><h1><span class="icon-eye2"></span><?= i18n("Ver Nota")?></h1></legend>
 							<div class="form">
 							<div class="formDatos">
-								<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
-								<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
-								<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+								<label class="labelId"><span class="icon-npm"></span><?= i18n("Id. Nota")?> <?=$nota->getIdNota()?></label>
+								<label class="labelAutor"><span class="icon-id-card"></span><?= i18n("Autor")?><?=$alias?></label>
+								<label class="labelFecha"><span class="icon-sun-o"></span><?= i18n("Fecha")?> <?=$nota->getFecha()?></label>
 								<input class="inputTitulo" type="text" placeholder="Título" readonly value="<?=$nota->getTitulo()?>">
 								<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 					</fieldset>

@@ -24,7 +24,7 @@ body {
 
 section {
 	width:100%;
-	background-image:url("../../view/Imágenes/fondoLogoClaro.png");
+	background-image:url("./view/Images/fondoLogoClaro.png");
 	background-attachment: fixed;
 	min-height: 595px;
 }
@@ -53,7 +53,7 @@ footer {
 	background: #8b008b;
 	overflow:hidden;
 	list-style: none;/*elimina los puntos de las listas del menu*/
-	text-align: center;	
+	text-align: center;
 	z-index: 1000;/*se posiciona el menu por encima de los demas elementos*/
 }
 
@@ -132,18 +132,18 @@ footer {
 }
 
 @media screen and (max-width : 576px ){/*cambia de modo el menu*/
-	
+
 	header {
 		position:fixed;
 		height: auto;
 	}
-	
+
 	section{
 		min-height: 595px;
 	}
-	
-	
-	
+
+
+
 	.logo {
 		display:block;
 		margin:auto;
@@ -151,20 +151,20 @@ footer {
 		height: auto;
 		top:0%;
 	}
-	
+
 	.formRegister, .formCompartirNota2, .formCrearNota, .formEditarNota, .formListarNota{
 		margin-top: 140px;
 	}
-	
+
 	.formCompartirNota {
 		margin-top: 20px;
 	}
-	
+
 	.menuBar {
 		display: block;
 		width: 100%;
 	}
-	
+
 	.btnMenu{
 		display: block;
 		width: 100%;
@@ -175,14 +175,14 @@ footer {
 		font-weight:bold;/*visualiza la fuente ancha*/
 		text-decoration: underline;
 	}
-	
+
 	.btnMenu span {/*Icono del menu*/
 		float: right;
 		font-size: 40px;
 		margin-right: 10px;
 		margin-left: 30px;
 	}
-	
+
 	nav {
 		display: none;
 		position: fixed;
@@ -190,12 +190,12 @@ footer {
 		width: 70%;
 		height: 300px;
 	}
-	
+
 	.menuGeneral {
 		display: block;
 		width: 100%;
 	}
-	
+
 	.menuGeneral li {
 		display: block;
 		text-align: left;
@@ -203,21 +203,21 @@ footer {
 		height: 100%;
 		width: 180px;
 	}
-	
+
 	.menuGeneral li ul li{
 		border-bottom: 0px;
 		width: 160px;
 		position: relative;
 	}
-	
+
 	.btnMenu:hover >header nav {
 		display: block;
 	}
-	
+
 }
 
 @media screen and (max-width : 466px ){
-	
+
 	.logo {
 		display:block;
 		margin:auto;
@@ -226,29 +226,29 @@ footer {
 		top:0%;
 		position: relative;
 	}
-	
+
 	.formRegister, .formCompartirNota2, .formCrearNota, .formEditarNota, .formListarNota {
 		margin-top: 140px;
 		margin-bottom: 60px;
 	}
-	
+
 	.formCompartirNota {
 		margin-top: 20px;
 	}
-	
+
 	header {
 		position:fixed;
 		height: auto;
 	}
-	
+
 	#contenedor {
 		margin-bottom: 0px;
 	}
-	
+
 }
 
 @media screen and (max-width: 430px) {
-	
+
 	.logo {
 		display:block;
 		margin:auto;
@@ -256,14 +256,14 @@ footer {
 		height: 100%;
 		top:0%;
 	}
-	
+
 	.formRegister, .formCompartirNota2, .formCrearNota, .formEditarNota, .formListarNota{
 		margin-top: 110px;
 		margin-bottom: 60px;
 	}
-	
+
 	.formCompartirNota {
 		margin-top: 20px;
 	}
-		
+
 }

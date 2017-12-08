@@ -22,20 +22,20 @@ $compartidas = $view->getVariable("compartidas");
 					<meta charset="utf-8">
 					<link rel="stylesheet" href="./css/formularios.css">
 					<title>registroUsuario</title>
-				</article>			
+				</article>
 				<div class="container">
-					<div class="tituloListar"><h1>Notas Publicadas</h1></div>
+					<div class="tituloListar"><h1><?= i18n("Notas Publicadas")?></h1></div>
 					<div id="creadas"><?=$creadas?></div>
 					<?php if(!empty($listaNotas)){
-						foreach($listaNotas as $nota){ 
+						foreach($listaNotas as $nota){
 					?>
 						<form class="formListarNota" action="index.php?controller=Notas&amp;action=listarNotas" method="POST">
 							<fieldset>
 									<legend align="center"><h1> <?=$nota->getTitulo()?></h1></legend>
 									<div class="form">
-										<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
-										<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$nota->getAutor()?></label>
-										<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+										<label class="labelId"><span class="icon-npm"></span><?= i18n("Id. Nota")?> <?=$nota->getIdNota()?></label>
+										<label class="labelAutor"><span class="icon-id-card"></span><?= i18n("Autor")?> <?=$nota->getAutor()?></label>
+										<label class="labelFecha"><span class="icon-sun-o"></span><?= i18n("Fecha")?> <?=$nota->getFecha()?></label>
 										<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
 									</div>
 									<div class="btnOpcionesNotas">
@@ -52,18 +52,18 @@ $compartidas = $view->getVariable("compartidas");
 						</form>
 					<?php }
 					}?>
-					<div><h1>Notas Compartidas</h1></div>
+					<div><h1><?= i18n("Notas Compartidas")?></h1></div>
 					<div id="compartidas"><?=$compartidas?></div>
 					<?php if(!empty($listaCompartidas)){
-						foreach($listaCompartidas as $compartida){ 
+						foreach($listaCompartidas as $compartida){
 					?>
 						<form class="formListarNota" action="index.php?controller=Notas&amp;action=listarNotas" method="POST">
 							<fieldset>
 									<legend align="center"><h1> <?=$compartida->getTitulo()?></h1></legend>
 									<div class="form">
-										<label class="labelId"><span class="icon-npm"></span>ID <?=$compartida->getIdNota()?></label>
-										<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$compartida->getAutor()?></label>
-										<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$compartida->getFecha()?></label>
+										<label class="labelId"><span class="icon-npm"></span><?= i18n("Id. Nota")?><?=$compartida->getIdNota()?></label>
+										<label class="labelAutor"><span class="icon-id-card"></span><?= i18n("Autor")?> <?=$compartida->getAutor()?></label>
+										<label class="labelFecha"><span class="icon-sun-o"></span><?= i18n("Fecha")?><?=$compartida->getFecha()?></label>
 										<textarea class="inputContenido" type="text" readonly> <?= $compartida->getContenido()?></textarea>
 									</div>
 									<div class="btnOpcionesNotas">

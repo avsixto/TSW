@@ -9,6 +9,6 @@
 		<title>FastVery</title>
 	</head>
 	<footer>
-		<p> ® Copyright 2017 FasVery. All rights reserved.</p>
+		<p>® <?= i18n("Copyright 2017 FasVery. Todos los derechos reservados.")?></p>
 	</footer>
 </html>

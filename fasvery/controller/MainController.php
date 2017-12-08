@@ -14,15 +14,14 @@ class MainController extends BaseController {
 	/**
 	* Reference to the PostMapper to interact
 	* with the database
-	
-	* @var PostMapper
+	* @var NotaMapper
 	*/
-	private $postMapper;
+	private $notaMapper;
 
 	public function __construct() {
 		parent::__construct();
 	}
-	
+
 	/**
 	* Action to list main
 	* Loads all the main from the database.

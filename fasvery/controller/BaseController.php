@@ -23,7 +23,7 @@ class BaseController {
 
 	/**
 	 * The current user instance
-	 * @var User
+	 * @var Usuario
 	 */
 	protected $currentUser;
 
@@ -46,6 +46,6 @@ class BaseController {
 		if($this->view->popFlash()!=""){// para que no se muestren mensajes entre vistas diferentes
 			$this->view->setFlash("");
 		}
-		
+
 	}
 }

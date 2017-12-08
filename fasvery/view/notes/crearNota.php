@@ -25,19 +25,19 @@ $listaAlias = $view->getVariable("listaAlias");
 			<div class="container">
 				<form class="formCrearNota" action="index.php?controller=Notas&amp;action=nueva" method="POST">
 					<fieldset>
-							<legend align="center"><h1><span class="icon-file-symlink-file"></span>Crear Nota</h1></legend>
+							<legend align="center"><h1><span class="icon-file-symlink-file"></span><?= i18n("Crear Nota")?></h1></legend>
 							<div class="form">
-							<input class="inputTitulo" type="text" name="titulo" placeholder="Título" required>
-							<textarea class="inputContenido" type="text" name="contenido" placeholder="Contenido" required></textarea>
+							<input class="inputTitulo" type="text" name="titulo" placeholder="<?= i18n("Título")?>" required>
+							<textarea class="inputContenido" type="text" name="contenido" placeholder="<?= i18n("Contenido")?>" required></textarea>
 							</div>
 							 <select multiple>
 							 	<?php foreach($listaAlias as $alias) { ?>
 							 		<option value="<?=$alias["alias"] ?>"><?= $alias["alias"] ?></option>
 							 	<?php }?>
-							</select> 
+							</select>
 							<div class="btnForm">
-								<input class="btnSubmit" type="submit" value="Crear">
-								<input class="btnReset" type="reset" value="Limpiar">
+								<input class="btnSubmit" type="submit" value="<?= i18n("Crear")?>">
+								<input class="btnReset" type="reset" value="<?= i18n("Limpiar")?>">
 							</div>
 					</fieldset>
 				</form>

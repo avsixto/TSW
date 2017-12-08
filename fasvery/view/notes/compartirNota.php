@@ -27,9 +27,9 @@ $listaAlias = $view->getVariable("listaAlias");
 			<div class="container">
 				<form class="formEditarNota" action="index.php?controller=Notas&amp;action=compartir" method="POST">
 					<fieldset>
-							<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
-							<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
-							<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+							<label class="labelId"><span class="icon-npm"></span><?= i18n("Id. Nota")?> <?=$nota->getIdNota()?></label>
+							<label class="labelAutor"><span class="icon-id-card"></span><?= i18n("Fecha")?> <?=$alias?></label>
+							<label class="labelFecha"><span class="icon-sun-o"></span><?= i18n("Fecha")?> <?=$nota->getFecha()?></label>
 							<input class="inputidNota" name="idNota" type="text" hidden="true" required="true" value="<?=$nota->getIdNota()?>">
 							<input class="inputTitulo" name="titulo" type="text" readonly placeholder="Título" required="true" value="<?=$nota->getTitulo()?>">
 							<textarea class="inputContenido" name="contenido" type="text" readonly required="true"> <?= $nota->getContenido()?></textarea>

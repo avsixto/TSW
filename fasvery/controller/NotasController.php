@@ -10,9 +10,9 @@ require_once(__DIR__."/../controller/BaseController.php");
 *Controller to users, logout and user registration
 **/
 class NotasController extends BaseController {
-	
+
 	private $NotaMapper;
-	
+
 	/**
 	* Obtiene la conexion
 	* Crea el mapper del usuario
@@ -22,7 +22,7 @@ class NotasController extends BaseController {
 		$this->NotaMapper = new NotaMapper();
 		// different to the "default" layout where the internal
 	}
-	
+
 	/*nueva
 	*Crea una nueva nota
 	*Es necesario esta logeado, en caso contrario requerira que el usuario se autentique
@@ -39,7 +39,7 @@ class NotasController extends BaseController {
 					if($_SESSION["currentuser"]){
 						$this->NotaMapper->save($note);
 					}else{
-						$errors["username"] = "Username and/or password not exists in system";
+						$errors["username"] = "El usuario y/o la contraseña no existe en el sistema";
 						$this->view->setFlash("errors: ".$errors["username"]);
 					}
 				}catch(ValidationException $ex){
@@ -73,7 +73,7 @@ class NotasController extends BaseController {
 			$this->view->render("notes", "verCompartida");
 		}
 	}
-	
+
 	/*listarNotas
 	* Lista todas las notas para un usuario
 	* Si la sesion no esta iniciada pedira que se inicie
@@ -112,7 +112,7 @@ class NotasController extends BaseController {
 		if(self::logeado()){
 			if(isset($_POST["idNota"]) && isset($_POST["titulo"]) && isset($_POST["contenido"])){
 				$this->NotaMapper->editar(new Nota($_POST["idNota"],$_POST["titulo"],$_POST["contenido"]));
-				$this->view->setFlash("Nota Editada correctamente");
+				$this->view->setFlash("Nota editada correctamente");
 				self::listarNotas();
 			}
 			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
@@ -132,7 +132,7 @@ class NotasController extends BaseController {
 				foreach ($_POST['listaAlias'] as $alias) {
 					$this->NotaMapper->compartir($usuarioMapper->getIdByAlias($alias),$_POST["idNota"]);
 				}
-				$this->view->setFlash("Nota Compartida correctamente");
+				$this->view->setFlash("Nota compartida correctamente");
 				self::listarNotas();
 			}
 			//Cargamos el formulario con la nota y la lista de alias para compartirla
@@ -150,7 +150,7 @@ class NotasController extends BaseController {
 	public function eliminarNotas(){
 		if(self::logeado()){
 			if(isset($_GET["idNota"]) && $this->NotaMapper->drop($_GET["idNota"])){
-				$this->view->setFlash("Nota Eliminada correctamente");
+				$this->view->setFlash("Nota eliminada correctamente");
 			}else{
 				$this->view->setFlash("ERROR: No se ha podido eliminar la nota");
 			}//Refresca la vista.

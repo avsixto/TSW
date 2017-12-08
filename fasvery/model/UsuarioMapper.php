@@ -3,7 +3,7 @@
 require_once(__DIR__."/../core/PDOConnection.php");
 
 class UsuarioMapper {
-	
+
 	private $db;
 	/**
 	*el contructor obtiene la conexion con la base de datos del core
@@ -12,7 +12,7 @@ class UsuarioMapper {
 		$this->db = PDOConnection::getInstance();
 	}
 	/**
-	*Añade un nuevo usuario en la bbdd
+	*Aï¿½ade un nuevo usuario en la bbdd
 	**/
 	public function save($user) {
 		$stmt = $this->db->prepare("INSERT INTO usuario (nombre,apellidos,alias,password) values (?,?,?,?)");
@@ -26,7 +26,7 @@ class UsuarioMapper {
 		$stmt->execute(array($user->getUsername(), $user->getPasswd()));
 	}
 	/**
-	comprueba si el alias existe
+	* comprueba si el alias existe
 	**/
 	public function userAliasExists($alias) {
 		$stmt = $this->db->prepare("SELECT count(alias) FROM usuario where alias=?");
@@ -39,7 +39,7 @@ class UsuarioMapper {
 	/*getAlias
 	* Obtiene todos los alias de los usuarios menos del usuario actual
 	* Cualquier usuario del sistema podra compartir con los demas sus notas
-	* No se ha pensado en retringir a los usuarios, todos son publicos para no complicar la lógica
+	* No se ha pensado en retringir a los usuarios, todos son publicos para no complicar la lï¿½gica
 	*/
 	public function getAlias(){
 		$stmt = $this->db->prepare("SELECT alias FROM usuario WHERE alias<>? ");
@@ -60,7 +60,7 @@ class UsuarioMapper {
 	}
 
 	/**
-	*compruba si existe el alias y la contraseña de un susuario
+	*compruba si existe el alias y la contraseï¿½a de un susuario
 	*/
 	public function isValidUser($alias, $password) {
 		$stmt = $this->db->prepare("SELECT count(alias) FROM usuario where alias=? and password=?");

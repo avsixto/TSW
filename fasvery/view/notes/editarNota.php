@@ -26,14 +26,14 @@ $alias=$view->getVariable("alias");
 			<div class="container">
 				<form class="formEditarNota" action="index.php?controller=Notas&amp;action=editar" method="POST">
 					<fieldset>
-							<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
-							<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
-							<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+							<label class="labelId"><span class="icon-npm"></span><?= i18n("Id Nota")?> <?=$nota->getIdNota()?></label>
+							<label class="labelAutor"><span class="icon-id-card"></span><?= i18n("Autor")?> <?=$alias?></label>
+							<label class="labelFecha"><span class="icon-sun-o"></span><?= i18n("Fecha")?> <?=$nota->getFecha()?></label>
 							<input class="inputidNota" name="idNota" type="text" hidden="true" required="true" value="<?=$nota->getIdNota()?>">
 							<input class="inputTitulo" name="titulo" type="text" placeholder="Título" required="true" value="<?=$nota->getTitulo()?>">
 							<textarea class="inputContenido" name="contenido" type="text" required="true"> <?= $nota->getContenido()?></textarea>
 							<div class="btnForm">
-							<input class="btnSubmit" type="submit" value="editar">
+							<input class="btnSubmit" type="submit" value="<?= i18n("Editar")?>">
 						</div>
 					</fieldset>
 				</form>
