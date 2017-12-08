@@ -1,18 +1,18 @@
 <?php
 require_once(__DIR__."/../../core/ViewManager.php");
-
 $view = ViewManager::getInstance();
-$listaAlias = $view->getVariable("alias");
-
+$nota = $view->getVariable("nota");
+$alias=$view->getVariable("alias");
+$listaAlias = $view->getVariable("listaAlias");
 ?>
 <!doctype html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-	<link rel="shortcut icon"  href="./view/Images/iconoLogo.png">
-	<link rel="stylesheet" href="../../css/style.css">
-	<link rel="stylesheet" href="./view/Images/Iconos/Iconos.css">
+	<link rel="shortcut icon"  href=".view/Images/iconoLogo.png">
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./Images/Iconos/Iconos.css">
 	<script src="./css/menuWeb.js" type="text/javascript"></script>
 	<title>FastVery</title>
 </head>
@@ -25,20 +25,22 @@ $listaAlias = $view->getVariable("alias");
 				<title>registroUsuario</title>
 			</article>
 			<div class="container">
-				<form class="formCompartirNota2" action="">
+				<form class="formEditarNota" action="index.php?controller=Notas&amp;action=compartir" method="POST">
 					<fieldset>
-							<legend align="center"><h1><span class="icon-share-alt"></span>Compartir</h1></legend>
-							<div class="formCompartir">
-								<input class="inputTituloComartir" type="text" placeholder="Título" readonly>
-								 <select>
-								 	<?php foreach ($listaAlias as $alias) {?>
-								 		<option value="<?$alias?>">$alias</option>
-								 	<?}?>
-								</select> 
-							</div>
+							<label class="labelId"><span class="icon-npm"></span>ID <?=$nota->getIdNota()?></label>
+							<label class="labelAutor"><span class="icon-id-card"></span>Autor <?=$alias?></label>
+							<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
+							<input class="inputidNota" name="idNota" type="text" hidden="true" required="true" value="<?=$nota->getIdNota()?>">
+							<input class="inputTitulo" name="titulo" type="text" readonly placeholder="Título" required="true" value="<?=$nota->getTitulo()?>">
+							<textarea class="inputContenido" name="contenido" type="text" readonly required="true"> <?= $nota->getContenido()?></textarea>
+								<select name="listaAlias[]" multiple>
+							 	<?php foreach($listaAlias as $alias) { ?>
+							 		<option value="<?=$alias["alias"] ?>"><?= $alias["alias"]?></option>
+							 	<?php }?>
+							</select>
 							<div class="btnForm">
-								<input class="btnSubmit" type="submit" value="Compartir">
-							</div>
+							<input class="btnSubmit" type="submit" value="Compartir">
+						</div>
 					</fieldset>
 				</form>
 			</div>

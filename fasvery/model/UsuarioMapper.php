@@ -37,13 +37,13 @@ class UsuarioMapper {
 	}
 
 	/*getAlias
-	* Obtiene todos los alias de los usuarios
+	* Obtiene todos los alias de los usuarios menos del usuario actual
 	* Cualquier usuario del sistema podra compartir con los demas sus notas
 	* No se ha pensado en retringir a los usuarios, todos son publicos para no complicar la lógica
 	*/
 	public function getAlias(){
-		$stmt = $this->db->prepare("SELECT alias FROM usuario");
-		$stmt->execute();
+		$stmt = $this->db->prepare("SELECT alias FROM usuario WHERE alias<>? ");
+		$stmt->execute(array($_SESSION["currentuser"]));
 		$listaAlias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $listaAlias;
 	}

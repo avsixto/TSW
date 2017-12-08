@@ -65,6 +65,25 @@ class NotaMapper {
 		return $listaNotas;
 	}
 
+	/*listShare
+	* Retorna una lista con las notas que un usurio ha compartido el usuario actural.
+	*/
+	public function listShare(){
+		$stmt = $this->db->prepare("SELECT fk_idNota FROM compartida WHERE fk_idUsuario=?");
+		$stmt->execute(array($_SESSION["currentuser"]));
+		$compartidas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$listaCompartidas=array();//lista con notas compartidas sera el valor devuelto
+		foreach($compartidas as $compartida){
+			if(strlen($compartida["titulo"])>13){//para que no se desajuste el tamaño de formulario
+				$titulo=substr($compartida["titulo"], 0, 10)."...";
+			}else{
+				$titulo=$compartida["titulo"];
+			}
+			array_push($listaCompartidas, new Nota($compartida["idNota"],$titulo, $compartida["contenido"], $compartida["fecha"],$compartida["fk_idUsuario"], self::getAutor($compartida["idNota"])));
+		}
+		return $listaCompartidas;
+	}
+
 	/*editar
 	* Permite editar el titulo y el contenido de una nota
 	* No se podrá editar la fecha, el autor o el id
@@ -84,9 +103,9 @@ class NotaMapper {
 	* Es necesario que la nota exista y ser el propietario para poder compartirla
 	*/
 	public function compartir($idUsuario, $idNota){
-		if(self::noteExists($nota->getIdNota()) && self::permisoNota($nota->getIdNota())){
+		if(self::noteExists($idNota) && self::permisoNota($idNota)){
 			$stmt=$this->db->prepare("INSERT INTO compartida(fk_idUsuario,fk_idNota ) VALUES(?,?)");
-			$stmt->execute(array($idUsuario,$idNota));
+			$stmt->execute(array(intval($idUsuario),intval($idNota)));
 			return true;
 		}
 		return false;
@@ -103,6 +122,15 @@ class NotaMapper {
 			return true;
 		}
 		return false;
+	}
+
+	/* getAutor
+	* Obtiene el Alias del autor de una nota
+	*/
+	private function getAutor($idNota){
+		$stmt=$this->bd->prepare("SELECT FROM nota WHERE fk_idUsuario=?");
+		$stmt->execute(array($idNota));
+		
 	}
 	
 	/**noteExists

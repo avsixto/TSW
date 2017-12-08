@@ -49,6 +49,8 @@ class NotasController extends BaseController {
 					$this->view->setVariable("errors", $errors);
 				}
 			}
+			$usuarioMapper = new UsuarioMapper();
+			$this->view->setVariable("listaAlias",$usuarioMapper->getAlias());
 			$this->view->render("notes", "crearNota");
 		}
 	}
@@ -65,21 +67,33 @@ class NotasController extends BaseController {
 	}
 	
 	/*listarNotas
-	*Lista todas las notas para un usuario
-	*Si la sesion no esta iniciada pedira que se inicie
+	* Lista todas las notas para un usuario
+	* Si la sesion no esta iniciada pedira que se inicie
+	* Primero lista las notas que un usuario ha creado (de las que es propietario)
+	* Segundo lista las notas que otros usuarios me han compartido(no soy propietario)
 	*/
 	public function listarNotas(){
 		if(self::logeado()){
 				$alias=$_SESSION["currentuser"];
-				$listNota=$this->NotaMapper->listNote();
-				if ($listNota == NULL) {
+				//se tratan las notas que he creado
+				$listaCreadas=$this->NotaMapper->listNote();
+				if ($listaCreadas == NULL) {
 					$this->view->setVariable("creadas","No ha publicado ninguna nota");//se muestra que no hay notas publicadas
 				}else{
 					$this->view->setVariable("creadas","");//no se muestra ningun mensaje
 					$this->view->setVariable("currentuser", $alias);
-					$this->view->setVariable("notes", $listNota);
+					$this->view->setVariable("notes", $listaCreadas);
 				}
-			$this->view->render("notes", "listarNotas");
+				//se tratan las notas que un usuario me ha compartido
+				$listCompartidas=$this->NotaMapper->listShare();
+				if ($listCompartidas == NULL) {
+					$this->view->setVariable("compartidas","No han compartido notas");//se muestra que no hay notas publicadas
+				}else{
+					$this->view->setVariable("compartidas","");//no se muestra ningun mensaje
+					$this->view->setVariable("currentuser", $alias);
+					$this->view->setVariable("notes", $listCompartidas);
+				}
+				$this->view->render("notes", "listarNotas");
 		}
 	}
 
@@ -102,18 +116,23 @@ class NotasController extends BaseController {
 
 	/*compartir
 	* Permite compartir una nota con varios usuarios.
+	* Muestra los detalles del a nota y la lista de usuarios para compartirla
 	*/
 	public function compartir(){
-		$usuarioMapper = new UsuarioMapper();
+		$usuarioMapper = new UsuarioMapper();//se usa para obtener la lista de alias
 		if(self::logeado()){
-			if(isset($_POST["idNota"]) && isset($_POST["ListaAlias"]) ){
-				foreach ($ListaAlias as $alias) {
+			if(isset($_POST["idNota"]) && isset($_POST['listaAlias']) ){
+				foreach ($_POST['listaAlias'] as $alias) {
 					$this->NotaMapper->compartir($usuarioMapper->getIdByAlias($alias),$_POST["idNota"]);
 				}
 				$this->view->setFlash("Nota Compartida correctamente");
 				self::listarNotas();
 			}
-			$this->view->render("notes", "listarNotas");
+			//Cargamos el formulario con la nota y la lista de alias para compartirla
+			$this->view->setVariable("listaAlias",$usuarioMapper->getAlias());
+			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+			$this->view->setVariable("alias",$_SESSION["currentuser"]);
+			$this->view->render("notes", "compartirNota");
 		}
 	}
 

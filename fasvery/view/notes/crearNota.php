@@ -1,3 +1,8 @@
+<?php
+require_once(__DIR__."/../../core/ViewManager.php");
+$view = ViewManager::getInstance();
+$listaAlias = $view->getVariable("listaAlias");
+?>
 <!doctype html>
 <html>
 <head>
@@ -25,9 +30,11 @@
 							<input class="inputTitulo" type="text" name="titulo" placeholder="Título" required>
 							<textarea class="inputContenido" type="text" name="contenido" placeholder="Contenido" required></textarea>
 							</div>
-							<div class="check"><label>Usuario1 </label><input type="checkbox"></div>
-							<div class="check"><label>Usuario2 </label><input type="checkbox"></div>
-							<div class="check"><label>Usuario3 </label><input type="checkbox"></div>
+							 <select multiple>
+							 	<?php foreach($listaAlias as $alias) { ?>
+							 		<option value="<?=$alias["alias"] ?>"><?= $alias["alias"] ?></option>
+							 	<?php }?>
+							</select> 
 							<div class="btnForm">
 								<input class="btnSubmit" type="submit" value="Crear">
 								<input class="btnReset" type="reset" value="Limpiar">
