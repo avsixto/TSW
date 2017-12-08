@@ -55,8 +55,8 @@ class UsuarioMapper {
 	public function getIdByAlias($idUsuario){
 		$stmt = $this->db->prepare("SELECT idUsuario FROM usuario WHERE alias=?");
 		$stmt->execute(array($idUsuario));
-		$idUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		return $idUsuario[0];
+		$id = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return ($id["0"])["idUsuario"];
 	}
 
 	/**

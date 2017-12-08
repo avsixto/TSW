@@ -65,6 +65,14 @@ class NotasController extends BaseController {
 			$this->view->render("notes", "verNota");
 		}
 	}
+
+	public function verNotaCompartida(){
+		if(self::logeado()){
+			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+			$this->view->setVariable("alias",$_SESSION["currentuser"]);
+			$this->view->render("notes", "verCompartida");
+		}
+	}
 	
 	/*listarNotas
 	* Lista todas las notas para un usuario
@@ -74,24 +82,23 @@ class NotasController extends BaseController {
 	*/
 	public function listarNotas(){
 		if(self::logeado()){
-				$alias=$_SESSION["currentuser"];
 				//se tratan las notas que he creado
 				$listaCreadas=$this->NotaMapper->listNote();
 				if ($listaCreadas == NULL) {
 					$this->view->setVariable("creadas","No ha publicado ninguna nota");//se muestra que no hay notas publicadas
 				}else{
 					$this->view->setVariable("creadas","");//no se muestra ningun mensaje
-					$this->view->setVariable("currentuser", $alias);
-					$this->view->setVariable("notes", $listaCreadas);
+					$this->view->setVariable("currentuser", $_SESSION["currentuser"]);
+					$this->view->setVariable("listaCreadas", $listaCreadas);
 				}
 				//se tratan las notas que un usuario me ha compartido
-				$listCompartidas=$this->NotaMapper->listShare();
-				if ($listCompartidas == NULL) {
+				$usuarioMapper = new UsuarioMapper();
+				$listaCompartidas=$this->NotaMapper->listShare($usuarioMapper->getIdByAlias($_SESSION["currentuser"]));
+				if ($listaCompartidas == NULL) {
 					$this->view->setVariable("compartidas","No han compartido notas");//se muestra que no hay notas publicadas
 				}else{
 					$this->view->setVariable("compartidas","");//no se muestra ningun mensaje
-					$this->view->setVariable("currentuser", $alias);
-					$this->view->setVariable("notes", $listCompartidas);
+					$this->view->setVariable("listaCompartidas", $listaCompartidas);
 				}
 				$this->view->render("notes", "listarNotas");
 		}

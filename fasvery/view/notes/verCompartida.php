@@ -34,14 +34,6 @@ $alias=$view->getVariable("alias");
 								<label class="labelFecha"><span class="icon-sun-o"></span>Fecha <?=$nota->getFecha()?></label>
 								<input class="inputTitulo" type="text" placeholder="Título" readonly value="<?=$nota->getTitulo()?>">
 								<textarea class="inputContenido" type="text" readonly> <?= $nota->getContenido()?></textarea>
-							<div class="btnOpcionesNotas">
-								<a class="btnEditar" href='./index.php?controller=Notas&amp;action=editar&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-pencil22"></span>
-								</a>
-								<a class="btnCompartir" href='./index.php?controller=Notas&amp;action=compartir&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-share-alt"></span>
-								</a>
-								<a class="btnEliminar" href='./index.php?controller=Notas&amp;action=eliminarNotas&amp;idNota=<?php echo $nota->getIdNota() ?>'><span class="icon-trash"></span>
-								</a>
-							</div>
 					</fieldset>
 				</form>
 			</div>

@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../model/Nota.php");
 
 class NotaMapper {
 	
@@ -68,17 +69,21 @@ class NotaMapper {
 	/*listShare
 	* Retorna una lista con las notas que un usurio ha compartido el usuario actural.
 	*/
-	public function listShare(){
+	public function listShare($idUsuario){
 		$stmt = $this->db->prepare("SELECT fk_idNota FROM compartida WHERE fk_idUsuario=?");
-		$stmt->execute(array($_SESSION["currentuser"]));
-		$compartidas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		$listaCompartidas=array();//lista con notas compartidas sera el valor devuelto
-		foreach($compartidas as $compartida){
+		$stmt->execute(array($idUsuario));
+		$idCompartidas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$listaCompartidas=array();//lista con notas compartidas
+		foreach ($idCompartidas as $id) {//recorreo los ids de las notas y las obtengo
+			$stmt = $this->db->prepare("SELECT * FROM nota WHERE idNota=?");
+			$stmt->execute(array(intval($id["fk_idNota"])));
+			$compartida=$stmt->fetchAll(PDO::FETCH_ASSOC);
+			$compartida=$compartida["0"];//nota compartida con todos sus datos
 			if(strlen($compartida["titulo"])>13){//para que no se desajuste el tamaño de formulario
 				$titulo=substr($compartida["titulo"], 0, 10)."...";
 			}else{
 				$titulo=$compartida["titulo"];
-			}
+			}//guardo la nota en una lista
 			array_push($listaCompartidas, new Nota($compartida["idNota"],$titulo, $compartida["contenido"], $compartida["fecha"],$compartida["fk_idUsuario"], self::getAutor($compartida["idNota"])));
 		}
 		return $listaCompartidas;
@@ -125,12 +130,18 @@ class NotaMapper {
 	}
 
 	/* getAutor
-	* Obtiene el Alias del autor de una nota
+	* Obtiene el Alias del autor de una nota pasandole el id de la nota
 	*/
 	private function getAutor($idNota){
-		$stmt=$this->bd->prepare("SELECT FROM nota WHERE fk_idUsuario=?");
+		$stmt=$this->db->prepare("SELECT fk_idUsuario FROM nota WHERE idNota=?");
 		$stmt->execute(array($idNota));
-		
+		$stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);//id usuario de la nota
+		$idPropietario=$stmt["0"];//id del propietario de la nota
+		$stmt=$this->db->prepare("SELECT alias FROM usuario WHERE idUsuario=?");
+		$stmt->execute(array(intval($idPropietario["fk_idUsuario"])));
+		$stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);//alias usuario $autor=de la nota
+		$autor=$stmt["0"];
+		return $autor["alias"];
 	}
 	
 	/**noteExists
