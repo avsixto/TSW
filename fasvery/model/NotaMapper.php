@@ -22,7 +22,7 @@ class NotaMapper {
 		$fk_idUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($fk_idUsuario as $id){
 		$stmtN = $this->db->prepare("INSERT INTO nota (titulo, contenido, fecha ,fk_idUsuario) values (?,?,?,?)");
-		$stmtN->execute(array($note->getTitulo(), $note->getContenido(), $note->getFecha(), $id["idUsuario"]));
+		$stmtN->execute(array($note->getTitulo(), $note->getContenido(), date("y-m-d"), $id["idUsuario"]));
 		}
 	}
 
