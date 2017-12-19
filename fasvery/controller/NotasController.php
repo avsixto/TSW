@@ -113,9 +113,11 @@ class NotasController extends BaseController {
 			if(isset($_POST["idNota"]) && isset($_POST["titulo"]) && isset($_POST["contenido"])){
 				$this->NotaMapper->editar(new Nota($_POST["idNota"],$_POST["titulo"],$_POST["contenido"]));
 				$this->view->setFlash("Nota editada correctamente");
-				self::listarNotas();
+				$this->view->redirect("Notas","listarNotas");
 			}
+			/*Falla*/
 			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
+			/*Falla*/
 			$this->view->setVariable("alias",$_SESSION["currentuser"]);
 			$this->view->render("notes","editarNota");
 		}
@@ -128,15 +130,16 @@ class NotasController extends BaseController {
 	public function compartir(){
 		$usuarioMapper = new UsuarioMapper();//se usa para obtener la lista de alias
 		if(self::logeado()){
-			if(isset($_POST["idNota"]) && isset($_POST['listaAlias']) ){
+			if(isset($_POST["idNota"]) && isset($_POST['listaAlias'])){
 				foreach ($_POST['listaAlias'] as $alias) {
 					$this->NotaMapper->compartir($usuarioMapper->getIdByAlias($alias),$_POST["idNota"]);
 				}
 				$this->view->setFlash("Nota compartida correctamente");
-				self::listarNotas();
+				$this->view->redirect("Notas","listarNotas");
 			}
 			//Cargamos el formulario con la nota y la lista de alias para compartirla
 			$this->view->setVariable("listaAlias",$usuarioMapper->getAlias());
+			//$this->view->setVariable("listaAlias",$usuarioMapper->getAliasCompartirNota());
 			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
 			$this->view->setVariable("alias",$_SESSION["currentuser"]);
 			$this->view->render("notes", "compartirNota");
@@ -154,7 +157,7 @@ class NotasController extends BaseController {
 			}else{
 				$this->view->setFlash("ERROR: No se ha podido eliminar la nota");
 			}//Refresca la vista.
-			self::listarNotas();
+			$this->view->redirect("Notas","listarNotas");
 		}
 	}
 

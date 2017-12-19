@@ -48,6 +48,34 @@ class UsuarioMapper {
 		return $listaAlias;
 	}
 
+	/*getAliasCompartirNota
+	* Devuelveuna lista con los usuarios con los que no se compartio esa nota
+	* Es necesario pasarle el id de la nota
+	*/
+	public function getAliasCompartirNota($idNota){
+		$stmt = $this->db->prepare("SELECT fk_idUsuario FROM compartida WHERE fk_idNota=? ");
+		$stmt->execute(array($idNota));
+		$yaCompartida = $stmt->fetchAll(PDO::FETCH_ASSOC);//usuairos con los que se compartio la nota
+		$listaAlias=self::getAlas();//todos los usuarios del sistema
+
+
+
+		$lista=array();//donde se guardara la lista de alias con los que se puede compartir la nota
+		foreach($listaAlias as $alias){//se comprueba si ese usuario tiene compartida la nota
+			$bool=true;//si es true se puede compartir la nota con ese usuario
+			foreach ($yaCompartida as $compartida) {
+				if($compartida["fk_idUsuaio"] == $alias["alias"] ){
+					$bool=false;//si es false no se puede compartir la nota
+				}
+			}
+			if($bool){//si no estaba compartida con ese alias lo añado a la lista
+				array_push($lista,$alias);
+			}
+		}
+
+		return $lista;
+	}
+
 	/*getIdByAlias
 	* Devuelve el id de un usuario buscandolo por el alias
 	* En el sistema no puede haber mas de un usuario con el mismo alias
