@@ -29,9 +29,10 @@ $listaAlias = $view->getVariable("listaAlias");
 							 		<option value="<?=$alias["alias"] ?>"><?= $alias["alias"]?></option>
 							 	<?php }?>
 							</select>
+
 							<div class="btnForm">
 							<input class="btnSubmit" type="submit" value="Compartir">
-						</div>
+							</div>
 					</fieldset>
 				</form>
 			</div>

@@ -21,11 +21,6 @@ $listaAlias = $view->getVariable("listaAlias");
 							<input class="inputTitulo" type="text" name="titulo" placeholder="<?= i18n("Título")?>" required>
 							<textarea class="inputContenido" type="text" name="contenido" placeholder="<?= i18n("Contenido")?>" required></textarea>
 							</div>
-							 <select multiple>
-							 	<?php foreach($listaAlias as $alias) { ?>
-							 		<option value="<?=$alias["alias"] ?>"><?= $alias["alias"] ?></option>
-							 	<?php }?>
-							</select>
 							<div class="btnForm">
 								<input class="btnSubmit" type="submit" value="<?= i18n("Crear")?>">
 								<input class="btnReset" type="reset" value="<?= i18n("Limpiar")?>">

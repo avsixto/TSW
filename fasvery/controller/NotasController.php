@@ -115,9 +115,7 @@ class NotasController extends BaseController {
 				$this->view->setFlash("Nota editada correctamente");
 				$this->view->redirect("Notas","listarNotas");
 			}
-			/*Falla*/
 			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
-			/*Falla*/
 			$this->view->setVariable("alias",$_SESSION["currentuser"]);
 			$this->view->render("notes","editarNota");
 		}
@@ -137,9 +135,13 @@ class NotasController extends BaseController {
 				$this->view->setFlash("Nota compartida correctamente");
 				$this->view->redirect("Notas","listarNotas");
 			}
+			$listaAlias=$usuarioMapper->getAliasCompartirNota($_GET["idNota"]);
+			if(empty($listaAlias)){
+				$this->view->setFlash("No hay usuarios disponibles para compartir esa nota");
+				$this->view->redirect("Notas","listarNotas");
+			}
 			//Cargamos el formulario con la nota y la lista de alias para compartirla
-			$this->view->setVariable("listaAlias",$usuarioMapper->getAlias());
-			//$this->view->setVariable("listaAlias",$usuarioMapper->getAliasCompartirNota());
+			$this->view->setVariable("listaAlias",$listaAlias);
 			$this->view->setVariable("nota",$this->NotaMapper->getNoteByID($_GET["idNota"]));
 			$this->view->setVariable("alias",$_SESSION["currentuser"]);
 			$this->view->render("notes", "compartirNota");
