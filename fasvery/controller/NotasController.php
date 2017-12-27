@@ -180,5 +180,19 @@ class NotasController extends BaseController {
 		}
 		return true;
 	}
+
+	/**
+	* Elimina la nota compartida
+	*/
+		public function deleteCompartida() {
+			if(self::logeado()){
+				if(isset($_GET["idNota"]) && $this->NotaMapper->deleteCompartida($_GET["idNota"])){
+					$this->view->setFlash("Note successfully delete");
+				}else{
+					$this->view->setFlash("ERROR: The note could not be deleted");
+				}//Refresca la vista.
+				$this->view->redirect("Notas","listarNotas");
+			}
+		}
 }
 ?>
