@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="./css/style.css">
 		<link rel="stylesheet" href="./view/Images/Iconos/Iconos.css">
 		<script src="./css/menuWeb.js" type="text/javascript"></script>
+		<script src="index.php?controller=language&amp;action=i18njs"></script>
 		<title>FastVery</title>
 	</head>
 	<body>
@@ -32,6 +33,11 @@
 									<li><a href="index.php?controller=Notas&amp;action=listarNotas"><span class="icon-list-ordered"></span><?= i18n("LIST")?></a></li>
 								</ul>
 							</li>
+							<li><a href="#"><span class="icon-sticky-note"></span><?= i18n("LANGUAGE")?><span class="icon-arrow-submenu"></span></a>
+								<ul>
+									<li><a href="index.php?controller=language&amp;action=change&amp;lang=es"><?= i18n("SPANISH")?></a></li>
+									<li><a href="index.php?controller=language&amp;action=change&amp;lang=en"><?= i18n("ENGLISH")?></a></li>
+								</ul>
 						</ul>
 					</nav>
 				</header>

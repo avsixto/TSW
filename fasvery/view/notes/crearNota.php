@@ -22,7 +22,7 @@ $listaAlias = $view->getVariable("listaAlias");
 							<textarea class="inputContenido" type="text" name="contenido" placeholder="<?= i18n("Content")?>" required></textarea>
 							</div>
 							<div class="btnForm">
-								<input class="btnSubmit" type="submit" value="<?= i18n("Create")?>">
+								<input class="btnSubmit" type="submit" value="<?= i18n("Save")?>">
 								<input class="btnReset" type="reset" value="<?= i18n("Clear")?>">
 							</div>
 							<div class="btnForm">

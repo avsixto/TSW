@@ -17,7 +17,7 @@
 							<input class="input" type="password" name="password" placeholder="&#9919; <?= i18n("Password")?>" required>
 							</div>
 							<div class="btnForm">
-								<input class="btnSubmit" type="submit" value="<?= i18n("Sing in")?>">
+								<input class="btnSubmit" type="submit" value="<?= i18n("Save")?>">
 								<input class="btnReset" type="reset" value="<?= i18n("Delete")?>">
 							</div>
 					</fieldset>
